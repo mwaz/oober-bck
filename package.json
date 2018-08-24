@@ -1,0 +1,32 @@
+{
+  "name": "expressjs-crud",
+  "version": "1.0.0",
+  "description": "api crud",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node app.js",
+    "dev": "nodemon ./app.js localhost 3001"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodejs.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "mwaz",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "faker": "^4.1.0",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^5.0.13",
+    "nodemon": "^1.17.3"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.10.0"
+  }
+}
