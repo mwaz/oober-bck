@@ -1,4 +1,5 @@
 const moongoose = require("mongoose");
+const bycrypt = require("bcryptjs");
 
 const UserSchema = moongoose.Schema(
   {
@@ -6,7 +7,8 @@ const UserSchema = moongoose.Schema(
       type: String,
       min: [4, "Username too short"],
       max: 12,
-      required: [true, "Kindly provide a username"]
+      required: [true, "Kindly provide a username"],
+      unique: true
     },
     password: {
       type: String,
@@ -19,7 +21,7 @@ const UserSchema = moongoose.Schema(
       min: [3, "Email too short"],
       max: 50,
       required: [false, "Kindly provide a valid email"],
-      unique: true
+      unique: false
     },
     confirmPassword: {
       type: String,
@@ -33,4 +35,33 @@ const UserSchema = moongoose.Schema(
   }
 );
 
-module.exports = moongoose.model("User", UserSchema);
+const User = (module.exports = moongoose.model("User", UserSchema));
+
+module.exports.addUser = function(newUser, callback) {
+  bycrypt.genSalt(10, (err, salt) => {
+    bycrypt.hash(newUser.password, salt, (err, hash) => {
+      if (err) {
+        throw err;
+      }
+      newUser.password = hash;
+      console.log("got here");
+      newUser.save(callback);
+    });
+  });
+};
+
+module.exports.getUserById = function(id, callback) {
+  User.findById(id, callback);
+};
+
+module.exports.getUserByUsername = function(username, callback) {
+  const query = { username: username };
+  User.findOne(query, callback);
+};
+
+module.exports.comparePasswords = function(candidatePassword, hash, callback) {
+  bycrypt.compare(candidatePassword, hash, (err, isMatch) => {
+    if (err) throw err;
+    callback(null, isMatch);
+  });
+};
