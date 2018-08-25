@@ -12,6 +12,11 @@ exports.create = (req, res) => {
       message: "User details cannot be empty"
     });
   }
+  if (req.body.password !== req.body.confirmPassword) {
+    return res.status(400).send({
+      message: "Passwords do not match"
+    });
+  }
   // Create a new recipe
   const user = new User({
     username: req.body.username,
