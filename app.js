@@ -3,7 +3,7 @@
  */
 const express = require("express");
 const bodyParser = require("body-parser");
-const routes = require("./app/routes/auth.routes");
+const routes = require("./app/routes/routes");
 const dbConfig = require("./config/database.config");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -46,3 +46,5 @@ app.get("/", (req, res) => {
 const server = app.listen(3004, function() {
   console.log("app running on", server.address().port);
 });
+
+module.exports = server;

@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../../config/database.config");
 
 exports.signup = (req, res, next) => {
-  //validate the request
+  //validate the user request
   if (
     !req.body.username ||
     !req.body.email ||
@@ -20,15 +20,14 @@ exports.signup = (req, res, next) => {
       message: "Passwords do not match"
     });
   }
-  // Create a new recipe
+  // Initialize object for a  new user
   const user = new User({
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password,
-    confirmPassword: req.body.password
+    password: req.body.password
   });
 
-  //save the recipe in the database
+  //Create a user
 
   User.addUser(user, (err, user) => {
     if (err) {
@@ -73,7 +72,7 @@ exports.login = (req, res) => {
 
         res.json({
           success: true,
-          token: "JWT" + token,
+          token: "JWT " + token,
           user: {
             id: user.id,
             username: user.username,
@@ -87,7 +86,8 @@ exports.login = (req, res) => {
   });
 };
 
-(exports.profile = passport.authenticate("jwt", { session: false })),
-  (req, res, next) => {
-    res.json({ user: req.user });
-  };
+exports.profile = (req, res, next) => {
+  // passport.authenticate("jwt", { session: false });
+  res.json({ user: req.user });
+  console.log(req.user, "some user");
+};
