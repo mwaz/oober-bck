@@ -26,6 +26,9 @@ const CarSchema = moongoose.Schema(
       type: String,
       max: 50,
       required: [true, "Kindly provide valid car capacity details"]
+    },
+    createdBy: {
+      type: String
     }
   },
   {

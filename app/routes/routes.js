@@ -2,26 +2,16 @@ const appRouter = function(app) {
   const users = require("../controllers/auth-controller");
   const cars = require("../controllers/car-controller");
   const passport = require("passport");
+  const privateRoute = passport.authenticate("jwt", { session: false });
+
   // Create a new user
   const baseURL = "/oober/api";
   app.post("/auth/signup", users.signup);
   app.post("/auth/login", users.login);
-  app.get(
-    "/auth/profile",
-    passport.authenticate("jwt", { session: false }),
-    users.profile
-  );
+  app.get("/auth/profile", privateRoute, users.profile);
 
-  app.post(
-    `${baseURL}/cars`,
-    passport.authenticate("jwt", { session: false }),
-    cars.create
-  );
-  app.get(
-    `${baseURL}/cars`,
-    passport.authenticate("jwt", { session: false }),
-    cars.getCars
-  );
+  app.post(`${baseURL}/cars`, privateRoute, cars.create);
+  app.get(`${baseURL}/cars`, privateRoute, cars.getCars);
 };
 
 module.exports = appRouter;

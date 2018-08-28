@@ -14,7 +14,8 @@ exports.create = (req, res, next) => {
     carName: req.body.carName,
     type: req.body.type,
     model: req.body.model,
-    capacity: req.body.capacity
+    capacity: req.body.capacity,
+    createdBy: req.user._id
   });
 
   Car.addCar(car, (err, car) => {
@@ -33,7 +34,6 @@ exports.create = (req, res, next) => {
 };
 
 exports.getCars = (req, res, next) => {
- 
   Car.getCarList((err, car) => {
     if (err) {
       res.json({
