@@ -12,6 +12,7 @@ const appRouter = function(app) {
 
   app.post(`${baseURL}/cars`, privateRoute, cars.create);
   app.get(`${baseURL}/cars`, privateRoute, cars.getCars);
+  app.get(`${baseURL}/cars/:id`, privateRoute, cars.getSingleCar);
 };
 
 module.exports = appRouter;

@@ -1,5 +1,4 @@
 const moongoose = require("mongoose");
-const bycrypt = require("bcryptjs");
 
 const CarSchema = moongoose.Schema(
   {
@@ -29,6 +28,9 @@ const CarSchema = moongoose.Schema(
     },
     createdBy: {
       type: String
+    },
+    status: {
+      type: String
     }
   },
   {
@@ -44,4 +46,13 @@ module.exports.addCar = function(newCar, callback) {
 
 module.exports.getCarList = function(callback) {
   Car.find(callback);
+};
+
+module.exports.getCarById = function(carId, callback) {
+  Car.findById(carId, callback);
+};
+
+module.exports.getCarByName = function(carName, callback) {
+  const query = { carName: carName };
+  Car.find(query, callback).limit(1);
 };

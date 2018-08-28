@@ -1,4 +1,5 @@
 const Car = require("../models/car.model");
+const BookedCar = require("../models/carBookings.model");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/database.config");
@@ -15,9 +16,9 @@ exports.create = (req, res, next) => {
     type: req.body.type,
     model: req.body.model,
     capacity: req.body.capacity,
-    createdBy: req.user._id
+    createdBy: req.user._id,
+    status: req.body.status
   });
-
   Car.addCar(car, (err, car) => {
     if (err) {
       res.json({
@@ -47,3 +48,40 @@ exports.getCars = (req, res, next) => {
     });
   });
 };
+
+exports.getSingleCar = (req, res) => {
+  Car.getCarById(req.params.id, (err, carData) => {
+    if (err) {
+      res.json({
+        success: false,
+        message: "Error fetching car" || err
+      });
+    }
+    res.json({
+      success: true,
+      carData
+    });
+    console.log(carData);
+  });
+};
+
+exports.getCarByName = (req, res) => {
+  Car.getCarByName(car.carName, (err, car) => {
+    if (car) {
+      res.json({
+        success: false,
+        message: "A similar car exists",
+        car
+      });
+    }
+  });
+};
+
+// exports.bookCar = (req, res) => {
+//   const bookedCar = new BookedCar({
+//     bookedVehicle:
+//     bookedBy:
+//     vehicleStatus:
+
+//   })
+// }
