@@ -61,3 +61,11 @@ module.exports.deleteCarById = function(carID, callback) {
   const query = { _id: carID };
   Car.remove(query, callback);
 };
+
+module.exports.editCarById = function(carId, carDetails, callback) {
+  const query = { _id: carId };
+  Car.findById(carId, (err, car) => {
+    if (err) throw err;
+    Object.assign(car, carDetails).save(callback);
+  });
+};

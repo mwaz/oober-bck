@@ -49,7 +49,7 @@ exports.getCars = (req, res, next) => {
   });
 };
 
-exports.getSingleCar = (req, res) => {
+exports.getCar = (req, res) => {
   Car.getCarById(req.params.id, (err, carData) => {
     if (err) {
       res.json({
@@ -65,7 +65,7 @@ exports.getSingleCar = (req, res) => {
   });
 };
 
-exports.deleteSingleCar = (req, res) => {
+exports.deleteCar = (req, res) => {
   Car.deleteCarById(req.params.id, (err, carData) => {
     if (err) {
       res.json({
@@ -91,6 +91,31 @@ exports.getCarByName = (req, res) => {
         car
       });
     }
+  });
+};
+
+exports.editCar = (req, res, next) => {
+  const car = {
+    carName: req.body.carName,
+    type: req.body.type,
+    model: req.body.model,
+    capacity: req.body.capacity,
+    createdBy: req.user._id,
+    status: req.body.status
+  };
+
+  Car.editCarById(req.params.id, car, (err, car) => {
+    if (err) {
+      res.json({
+        success: false,
+        message: "Failed to edit Car"
+      });
+    }
+    res.json({
+      success: true,
+      message: "Successfully Edited Car",
+      car
+    });
   });
 };
 

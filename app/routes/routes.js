@@ -11,9 +11,10 @@ const appRouter = function(app) {
   app.get("/auth/profile", privateRoute, users.profile);
 
   app.post(`${baseURL}/cars`, privateRoute, cars.create);
+  app.put(`${baseURL}/cars/:id`, privateRoute, cars.editCar);
   app.get(`${baseURL}/cars`, privateRoute, cars.getCars);
-  app.get(`${baseURL}/cars/:id`, privateRoute, cars.getSingleCar);
-  app.delete(`${baseURL}/cars/:id`, privateRoute, cars.deleteSingleCar);
+  app.get(`${baseURL}/cars/:id`, privateRoute, cars.getCar);
+  app.delete(`${baseURL}/cars/:id`, privateRoute, cars.deleteCar);
 };
 
 module.exports = appRouter;
