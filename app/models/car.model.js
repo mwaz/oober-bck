@@ -56,3 +56,8 @@ module.exports.getCarByName = function(carName, callback) {
   const query = { carName: carName };
   Car.find(query, callback).limit(1);
 };
+
+module.exports.deleteCarById = function(carID, callback) {
+  const query = { _id: carID };
+  Car.remove(query, callback);
+};

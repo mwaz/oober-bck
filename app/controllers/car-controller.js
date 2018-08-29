@@ -65,6 +65,23 @@ exports.getSingleCar = (req, res) => {
   });
 };
 
+exports.deleteSingleCar = (req, res) => {
+  Car.deleteCarById(req.params.id, (err, carData) => {
+    if (err) {
+      res.json({
+        success: false,
+        message: "Error deleting car" || err
+      });
+    }
+    res.json({
+      success: true,
+      message: "Car Successfully deleted",
+      carData
+    });
+    console.log(carData);
+  });
+};
+
 exports.getCarByName = (req, res) => {
   Car.getCarByName(car.carName, (err, car) => {
     if (car) {
