@@ -4,7 +4,7 @@
   "description": "api crud",
   "main": "app.js",
   "scripts": {
-    "test": "npm test",
+    "test": "mocha app/test",
     "start": "node app.js",
     "dev": "nodemon ./app.js localhost 3001"
   },
