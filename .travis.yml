@@ -7,4 +7,4 @@ install:
 services:
   - mongodb
 after_success:
-  - mocha app/tests
+  - mocha app/test
