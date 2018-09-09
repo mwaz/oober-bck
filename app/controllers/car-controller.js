@@ -35,7 +35,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.getCars = (req, res, next) => {
-  Car.getCarList((err, car) => {
+  Car.getCarList(req.user.id, (err, car) => {
     if (err) {
       res.json({
         success: false,
@@ -66,7 +66,7 @@ exports.getCar = (req, res) => {
 };
 
 exports.deleteCar = (req, res) => {
-  Car.deleteCarById(req.params.id, (err, carData) => {
+  Car.deleteCarById(req.params.id, req.user.id, (err, carData) => {
     if (err) {
       res.json({
         success: false,

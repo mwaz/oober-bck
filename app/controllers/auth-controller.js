@@ -28,7 +28,6 @@ exports.signup = (req, res, next) => {
   });
 
   //Create a user
-
   User.addUser(user, (err, user) => {
     if (err) {
       res.json({
@@ -38,7 +37,8 @@ exports.signup = (req, res, next) => {
     } else {
       res.json({
         success: true,
-        message: "User Registered Successfully"
+        message: "User Registered Successfully",
+        user
       });
     }
   });

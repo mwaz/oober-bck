@@ -44,8 +44,9 @@ module.exports.addCar = function(newCar, callback) {
   newCar.save(callback);
 };
 
-module.exports.getCarList = function(callback) {
-  Car.find(callback);
+module.exports.getCarList = function(userId, callback) {
+  const query = { createdBy: userId };
+  Car.find(query, callback);
 };
 
 module.exports.getCarById = function(carId, callback) {
@@ -57,8 +58,11 @@ module.exports.getCarByName = function(carName, callback) {
   Car.find(query, callback).limit(1);
 };
 
-module.exports.deleteCarById = function(carID, callback) {
-  const query = { _id: carID };
+module.exports.deleteCarById = function(carId, userId, callback) {
+  const query = { _id: carId, createdBy: userId };
+  if (userId !== query.createdBy) {
+    callback("No sufficient Privilleges to delete car");
+  }
   Car.remove(query, callback);
 };
 
@@ -66,6 +70,9 @@ module.exports.editCarById = function(carId, carDetails, callback) {
   const query = { _id: carId };
   Car.findById(carId, (err, car) => {
     if (err) throw err;
+    if (carDetails.createdBy !== car.createdBy) {
+      callback("No sufficient Privilleges to edit car");
+    }
     Object.assign(car, carDetails).save(callback);
   });
 };
