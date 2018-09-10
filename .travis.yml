@@ -8,4 +8,4 @@ install:
 services:
   - mongodb
 after_success:
-  - mocha app/test
+  - npm test
