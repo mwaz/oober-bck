@@ -3,11 +3,11 @@ const chai = require("chai");
 const expect = chai.expect;
 const mongoose = require("mongoose");
 // const app = require("../../config/database.config");
-const User = require("../models/user.model");
+const User = require("../app/models/user.model");
 const request = require("supertest");
 const sinon = require("sinon");
-const auth = require("../controllers/auth-controller");
-const app = require("../../app.js");
+const auth = require("../app/controllers/auth-controller");
+const app = require("../app.js");
 const chaiHttP = require("chai-http");
 let should = chai.should();
 const agent = request.agent(app);
@@ -41,7 +41,7 @@ describe("User registration process", () => {
     });
   });
 
-    /* Test the Get profile route */
+  /* Test the Get profile route */
   describe("Running profile tests", () => {
     let loginDetails = {
       username: "TestUser",
@@ -78,6 +78,4 @@ describe("User registration process", () => {
       done();
     });
   });
-
-
 });
