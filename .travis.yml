@@ -10,3 +10,6 @@ services:
   - mongodb
 after_success:
   - npm test
+  - npm run coveralls
+script:
+- npm run coveralls

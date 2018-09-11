@@ -2,7 +2,6 @@ const Car = require("../models/car.model");
 const BookedCar = require("../models/carBookings.model");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const config = require("../../config/database.config");
 
 exports.create = (req, res, next) => {
   if (!req.body.carName || !req.body.model) {

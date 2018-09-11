@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const config = require("../../config/database.config");
+const config = require("../../config");
 
 exports.signup = (req, res, next) => {
   //validate the user request
@@ -65,10 +65,13 @@ exports.login = (req, res) => {
     User.comparePasswords(password, user.password, (err, isMatch) => {
       if (err) throw err;
       if (isMatch) {
-        console.log(user, "user object");
-        const token = jwt.sign(user.toJSON(), config.secret, {
-          expiresIn: 604800
-        });
+        const token = jwt.sign(
+          user.toJSON(),
+          config[process.env.NODE_ENV]["SECRET"],
+          {
+            expiresIn: 604800
+          }
+        );
 
         res.json({
           success: true,
@@ -87,7 +90,5 @@ exports.login = (req, res) => {
 };
 
 exports.profile = (req, res, next) => {
-  // passport.authenticate("jwt", { session: false });
   res.json({ user: req.user });
-  console.log(req.user, "some user");
 };
