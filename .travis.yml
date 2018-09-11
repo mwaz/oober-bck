@@ -9,3 +9,4 @@ services:
 after_success:
   - npm run test
   - npm run coverage
+  - npm run coveralls
