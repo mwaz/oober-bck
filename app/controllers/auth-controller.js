@@ -1,10 +1,10 @@
 const User = require("../models/user.model");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const config = require("../../config/database.config");
+const config = require("../../config");
 
 exports.signup = (req, res, next) => {
-  //validate the request
+  //validate the user request
   if (
     !req.body.username ||
     !req.body.email ||
@@ -20,16 +20,14 @@ exports.signup = (req, res, next) => {
       message: "Passwords do not match"
     });
   }
-  // Create a new recipe
+  // Initialize object for a  new user
   const user = new User({
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password,
-    confirmPassword: req.body.password
+    password: req.body.password
   });
 
-  //save the recipe in the database
-
+  //Create a user
   User.addUser(user, (err, user) => {
     if (err) {
       res.json({
@@ -39,7 +37,8 @@ exports.signup = (req, res, next) => {
     } else {
       res.json({
         success: true,
-        message: "User Registered Successfully"
+        message: "User Registered Successfully",
+        user
       });
     }
   });
@@ -66,14 +65,17 @@ exports.login = (req, res) => {
     User.comparePasswords(password, user.password, (err, isMatch) => {
       if (err) throw err;
       if (isMatch) {
-        console.log(user, "user object");
-        const token = jwt.sign(user.toJSON(), config.secret, {
-          expiresIn: 604800
-        });
+        const token = jwt.sign(
+          user.toJSON(),
+          config[process.env.NODE_ENV]["SECRET"],
+          {
+            expiresIn: 604800
+          }
+        );
 
         res.json({
           success: true,
-          token: "JWT" + token,
+          token: "JWT " + token,
           user: {
             id: user.id,
             username: user.username,
@@ -87,7 +89,6 @@ exports.login = (req, res) => {
   });
 };
 
-(exports.profile = passport.authenticate("jwt", { session: false })),
-  (req, res, next) => {
-    res.json({ user: req.user });
-  };
+exports.profile = (req, res, next) => {
+  res.json({ user: req.user });
+};

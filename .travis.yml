@@ -1,0 +1,14 @@
+language: "node_js"
+node_js:
+  - "node"
+install: 
+  - npm install
+services:
+  - mongodb
+  - mongoose
+
+scripts:
+ - npm run test
+ - npm run coverage
+after_success:
+  - npm run coveralls

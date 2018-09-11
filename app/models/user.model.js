@@ -20,14 +20,9 @@ const UserSchema = moongoose.Schema(
       type: String,
       min: [3, "Email too short"],
       max: 50,
+      match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
       required: [false, "Kindly provide a valid email"],
       unique: false
-    },
-    confirmPassword: {
-      type: String,
-      min: [6, "Password too short"],
-      max: 50,
-      required: [true, "Kindly provide a valid confirm password"]
     }
   },
   {
