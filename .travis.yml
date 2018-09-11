@@ -8,6 +8,7 @@ install:
   - npm install
 services:
   - mongodb
+  - mongoose
 after_success:
   - npm test
   - npm run coverage
