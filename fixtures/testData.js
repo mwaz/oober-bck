@@ -51,12 +51,14 @@ module.exports = {
     carName: "someCarA",
     type: "sampleCarType",
     model: "VoxWagon",
-    capacity: "1200CC"
+    capacity: "SomeCapacity",
+    status: "0"
   },
   carSampleB: {
     carName: "someCarB",
     type: "sampleCarType",
     model: "VoxWagon",
-    capacity: "1200CC"
+    capacity: "SomeCapacity",
+    status: "0"
   }
 };

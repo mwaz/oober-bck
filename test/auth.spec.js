@@ -17,7 +17,7 @@ let should = chai.should();
 chai.use(chaiHttP);
 const mongoClient = require("mongodb").MongoClient;
 
-describe("int::app", function() {
+describe("Authentication and Setup Tests", function() {
   let request = null;
   let server = null;
 
@@ -30,7 +30,6 @@ describe("int::app", function() {
 
   after(function(done) {
     // server.close(done);
-    process.exit(0);
   });
 
   it("should create a new user", function() {
@@ -122,7 +121,8 @@ describe("int::app", function() {
       .end((err, res) => {
         res.should.have.status(200);
         res.should.be.a("Object");
-        res.body.message.should.be.eql("User not found");
+        res.body.should.have.property("success");
+        res.body.success.should.be.eql(false);
       });
   });
 
@@ -141,6 +141,9 @@ describe("int::app", function() {
             res.should.have.status(200);
             res.body.should.be.a("Object");
             res.body.should.have.property("user");
+            res.body.user.should.have.property("username");
+            res.body.user.should.have.property("password");
+            res.body.user.should.have.property("email");
             done();
           });
       });
