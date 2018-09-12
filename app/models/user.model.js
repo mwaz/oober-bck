@@ -39,7 +39,6 @@ module.exports.addUser = function(newUser, callback) {
         throw err;
       }
       newUser.password = hash;
-      console.log("got here");
       newUser.save(callback);
     });
   });

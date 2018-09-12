@@ -70,12 +70,13 @@ describe("Car endpoints", function() {
       .send(testData.carSampleB)
       .expect(200)
       .then(res => {
-        res.body.car.should.be.a("Object");
-        res.body.should.be.a("Object");
+        res.body.should.have.property("message");
         res.body.should.have.property("success");
-        res.body.should.have.property("success").eql(true);
         res.body.should.have.property("car");
-
+        res.body.should.be.a("Object");
+        res.body.car.should.be.a("Object");
+        res.body.car.should.have.property("carName");
+        res.body.car.carName.should.be.eql("someCarB");
         done();
       });
   });
@@ -110,7 +111,7 @@ describe("Car endpoints", function() {
 
   it("Should delete a single car", function(done) {
     request
-      .delete(`/oober/api/cars/${_carId}`)
+      .delete(`/oober/api/cars/${_carId2}`)
       .set("Authorization", _token)
       .expect(200)
       .then(res => {
@@ -118,7 +119,6 @@ describe("Car endpoints", function() {
         res.body.should.have.property("message");
         res.body.should.have.property("carData");
         res.body.message.should.be.eql("Car Successfully deleted");
-        console.log(res.body);
         done();
       });
   });

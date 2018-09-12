@@ -4,7 +4,6 @@ const assert = require("assert");
 const chai = require("chai");
 const expect = chai.expect;
 const mongoose = require("mongoose");
-// const app = require("../../config/database.config");
 const User = require("../app/models/user.model");
 const supertest = require("supertest");
 const app = require("../app.js");
@@ -13,9 +12,8 @@ const mongodb = require("mongodb");
 const chaiHttP = require("chai-http");
 const testData = require("../fixtures/testData");
 let should = chai.should();
-// const agent = request.agent(app);
 chai.use(chaiHttP);
-const mongoClient = require("mongodb").MongoClient;
+const authController = require("../app/controllers/auth-controller");
 
 describe("Authentication and Setup Tests", function() {
   let request = null;
@@ -28,67 +26,70 @@ describe("Authentication and Setup Tests", function() {
     request = supertest.agent(server);
   });
 
-  after(function(done) {
-    // server.close(done);
-  });
+  // after(function(done) {
+  //   // server.close(done);
+  // });
 
-  it("should create a new user", function() {
+  it("should create a new user POST /auth/signup", function() {
     return request
       .post("/auth/signup")
       .send(testData.sampleUserA)
       .expect(200);
   });
 
-  it("Should return 400 if user has no username", function() {
+  it("Should return 400 if user has no username POST /auth/signup", function() {
     request
       .post("/auth/signup")
       .send(testData.sampleUserD)
+      .expect(400)
       .end((err, data) => {
-        console.log(data.body.message);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
       });
   });
-  it("Should return 400 if user has no email", function() {
+  it("Should return 400 if user has no email POST /auth/signup", function() {
     request
       .post("/auth/signup")
       .send(testData.sampleUserE)
+      .expect(400)
       .end((err, data) => {
-        console.log(data.body.message);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
       });
   });
-  it("Should return 400 if user has no password", function() {
+  it("Should return 400 if user has no password POST /auth/signup", function() {
     request
       .post("/auth/signup")
       .send(testData.sampleUserF)
+      .expect(400)
       .end((err, data) => {
-        console.log(data.body.message);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
       });
   });
 
-  it("Should return 400 if passwords do not match", function() {
+  it("Should return 400 if passwords do not match POST /auth/signup", function() {
     request
       .post("/auth/signup")
       .send(testData.sampleUserG)
+      .expect(400)
       .end((err, data) => {
-        console.log(data.body.message);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("Passwords do not match");
       });
   });
 
-  it("should return an error if user is not authenticated", function(done) {
-    request.get("/auth/profile").end((err, res) => {
-      res.should.have.status(401);
-      done();
-    });
+  it("should return an error if user is not authenticated POST /auth/profile", function(done) {
+    request
+      .get("/auth/profile")
+      .expect(401)
+      .end((err, res) => {
+        res.should.have.status(401);
+        done();
+      });
   });
 
-  it("should login a user", function(done) {
+  it("should login a user POST /auth/login", function(done) {
     let _token = null;
     request
       .post("/auth/login")
@@ -101,7 +102,7 @@ describe("Authentication and Setup Tests", function() {
     done();
   });
 
-  it("should throw error if login details are incorrect", function() {
+  it("should throw error if login details are incorrect POST /auth/login", function() {
     request
       .post("/auth/login")
       .send(testData.sampleUserAA)
@@ -113,7 +114,7 @@ describe("Authentication and Setup Tests", function() {
       });
   });
 
-  it("should throw error user does not exist", function() {
+  it("should throw error user does not exist POST /auth/login", function() {
     request
       .post("/auth/login")
       .send(testData.sampleUserG)
@@ -125,8 +126,7 @@ describe("Authentication and Setup Tests", function() {
         res.body.success.should.be.eql(false);
       });
   });
-
-  it("should show profile of user after login", function(done) {
+  it("should show profile of user after login POST /auth/login", function(done) {
     let _token = null;
     request
       .post("/auth/login")
