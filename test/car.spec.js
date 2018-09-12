@@ -18,6 +18,7 @@ describe("Car endpoints", function() {
     request = supertest.agent(server);
   });
 
+  // Login user
   before(function(done) {
     request
       .post("/auth/login")
@@ -25,6 +26,32 @@ describe("Car endpoints", function() {
       .expect(200)
       .then(data => {
         _token = data.body.token;
+        done();
+      });
+  });
+
+  // Create Car A
+  before(function(done) {
+    request
+      .post("/oober/api/cars")
+      .set("Authorization", _token)
+      .send(testData.carSampleA)
+      .expect(200)
+      .then(res => {
+        _carId = res.body.car._id;
+        done();
+      });
+  });
+
+  // Create another car
+  before(function(done) {
+    request
+      .post("/oober/api/cars")
+      .set("Authorization", _token)
+      .send(testData.carSampleC)
+      .expect(200)
+      .then(res => {
+        _carId2 = res.body.car._id;
         done();
       });
   });
@@ -64,7 +91,34 @@ describe("Car endpoints", function() {
         res.body.should.have.property("success");
         res.body.should.have.property("success").eql(true);
         res.body.should.have.property("cars");
+        done();
+      });
+  });
+  it("Should get a single car", function(done) {
+    request
+      .get(`/oober/api/cars/${_carId}`)
+      .set("Authorization", _token)
+      .expect(200)
+      .then(res => {
+        res.body.should.be.a("Object");
+        res.body.should.have.property("success");
+        res.body.should.have.property("success").eql(true);
+        res.body.should.have.property("carData");
+        done();
+      });
+  });
 
+  it("Should delete a single car", function(done) {
+    request
+      .delete(`/oober/api/cars/${_carId}`)
+      .set("Authorization", _token)
+      .expect(200)
+      .then(res => {
+        res.body.should.have.property("success");
+        res.body.should.have.property("message");
+        res.body.should.have.property("carData");
+        res.body.message.should.be.eql("Car Successfully deleted");
+        console.log(res.body);
         done();
       });
   });

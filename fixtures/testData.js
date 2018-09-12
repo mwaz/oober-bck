@@ -54,8 +54,22 @@ module.exports = {
     capacity: "SomeCapacity",
     status: "0"
   },
+  carEditSampleA: {
+    carName: "someNewCarA",
+    type: "sampleCarTypeA",
+    model: "VoxWagone",
+    capacity: "SomeCapacity",
+    status: "0"
+  },
   carSampleB: {
     carName: "someCarB",
+    type: "sampleCarType",
+    model: "VoxWagon",
+    capacity: "SomeCapacity",
+    status: "0"
+  },
+  carSampleC: {
+    carName: "someCarC",
     type: "sampleCarType",
     model: "VoxWagon",
     capacity: "SomeCapacity",

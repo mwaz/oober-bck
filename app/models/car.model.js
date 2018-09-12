@@ -6,8 +6,7 @@ const CarSchema = moongoose.Schema(
       type: String,
       min: [3, "Car name too short"],
       max: 50,
-      required: [true, "Kindly provide a car name"],
-      unique: true
+      required: [true, "Kindly provide a car name"]
     },
     type: {
       type: String,
@@ -67,12 +66,14 @@ module.exports.deleteCarById = function(carId, userId, callback) {
 };
 
 module.exports.editCarById = function(carId, carDetails, callback) {
-  const query = { _id: carId };
-  Car.findById(carId, (err, car) => {
-    if (err) throw err;
-    if (carDetails.createdBy !== car.createdBy) {
-      callback("No sufficient Privilleges to edit car");
-    }
-    Object.assign(car, carDetails).save(callback);
-  });
+  // const query = { _id: carId };
+  // Car.findById(carId, (err, car) => {
+  //   if (err) throw err;
+  //   if (carDetails.createdBy !== car.createdBy) {
+  //     callback("No sufficient Privilleges to edit car");
+  //   }
+  //   Object.assign(car, carDetails).save(callback);
+  // });
+
+  Car.findOneAndUpdate(carId, carDetails, callback);
 };

@@ -60,7 +60,6 @@ exports.getCar = (req, res) => {
       success: true,
       carData
     });
-    console.log(carData);
   });
 };
 
@@ -77,7 +76,6 @@ exports.deleteCar = (req, res) => {
       message: "Car Successfully deleted",
       carData
     });
-    console.log(carData);
   });
 };
 
