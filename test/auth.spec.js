@@ -43,6 +43,7 @@ describe("Authentication and Setup Tests", function() {
       .send(testData.sampleUserD)
       .expect(400)
       .end((err, data) => {
+        data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
       });
@@ -53,6 +54,7 @@ describe("Authentication and Setup Tests", function() {
       .send(testData.sampleUserE)
       .expect(400)
       .end((err, data) => {
+        data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
       });
@@ -63,6 +65,7 @@ describe("Authentication and Setup Tests", function() {
       .send(testData.sampleUserF)
       .expect(400)
       .end((err, data) => {
+        data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
       });
@@ -74,6 +77,7 @@ describe("Authentication and Setup Tests", function() {
       .send(testData.sampleUserG)
       .expect(400)
       .end((err, data) => {
+        data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("Passwords do not match");
       });
@@ -102,7 +106,7 @@ describe("Authentication and Setup Tests", function() {
     done();
   });
 
-  it("should throw error if login details are incorrect POST /auth/login", function() {
+  it("should throw error if login details are incorrect POST /auth/login", function(done) {
     request
       .post("/auth/login")
       .send(testData.sampleUserAA)
@@ -111,6 +115,7 @@ describe("Authentication and Setup Tests", function() {
         res.should.have.status(200);
         res.should.be.a("Object");
         res.body.message.should.be.eql("Wrong Password");
+        done();
       });
   });
 

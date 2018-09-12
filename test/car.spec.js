@@ -81,6 +81,21 @@ describe("Car endpoints", function() {
       });
   });
 
+  it("Should throw errors if missing car details", function(done) {
+    request
+      .post("/oober/api/cars")
+      .set("Authorization", _token)
+      .send(testData.carSampleBB)
+      .expect(400)
+      .then(res => {
+        res.body.should.have.property("message");
+        res.body.should.have.property("success");
+        res.body.success.should.be.eql(false);
+        res.body.message.should.be.eql("Kindly fill in all details");
+        done();
+      });
+  });
+
   it("Should get added cars", function(done) {
     request
       .get("/oober/api/cars")
@@ -108,7 +123,17 @@ describe("Car endpoints", function() {
         done();
       });
   });
-
+  it("Should successfully edit a car", function() {
+    request
+      .put(`/oober/api/cars/${_carId}`)
+      .set("Authorization", _token)
+      .send(testData.carEditSampleA)
+      .then(res => {
+        res.body.should.have.property("success");
+        res.body.should.have.property("message");
+        res.body.message.should.be.eql("Successfully Edited Car");
+      });
+  });
   it("Should delete a single car", function(done) {
     request
       .delete(`/oober/api/cars/${_carId2}`)
@@ -122,4 +147,29 @@ describe("Car endpoints", function() {
         done();
       });
   });
+
+  // it("Throws error for invalid delete id on a car ", function() {
+  //   request
+  //     .delete("/oober/api/cars/1")
+  //     .set("Authorization", _token)
+  //     .then(res => {
+  //       res.body.should.have.property("message");
+  //       res.body.success.should.be.eql(false);
+  //       res.body.message.should.be.eql("Error deleting car");
+  //     });
+  // });
+
+  // it("Should throw error if wrong car id is provided", function(done) {
+  //   request
+  //     .get("/oober/api/cars/1")
+  //     .set("Authorization", _token)
+  //     .then(res => {
+  //       res.body.should.be.a("Object");
+  //       res.body.should.have.property("success");
+  //       res.body.should.have.property("success").eql(false);
+  //       res.body.should.have.property("message");
+  //       res.body.message.should.be.eql("Error fetching car");
+  //       done();
+  //     });
+  // });
 });

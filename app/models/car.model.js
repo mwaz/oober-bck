@@ -62,7 +62,7 @@ module.exports.deleteCarById = function(carId, userId, callback) {
   if (userId !== query.createdBy) {
     callback("No sufficient Privilleges to delete car");
   }
-  Car.deleteOne(query, callback);
+  Car.findOneAndDelete(query, callback);
 };
 
 module.exports.editCarById = function(carId, carDetails, callback) {
