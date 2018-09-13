@@ -30,7 +30,7 @@ exports.signup = (req, res, next) => {
   //Create a user
   User.addUser(user, (err, user) => {
     if (err) {
-      res.json({
+      return res.json({
         success: false,
         message: "Failed to create the user" + `${err}` || err
       });

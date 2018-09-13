@@ -14,7 +14,10 @@ const passport = require("passport");
 mongoose.Promise = global.Promise;
 // const dbURL = config[process.env.NODE_ENV]['DATABASE'];
 mongoose
-  .connect(config[process.env.NODE_ENV]["DATABASE"])
+  .connect(
+    config[process.env.NODE_ENV]["DATABASE"],
+    { useNewUrlParser: true }
+  )
   .then(() => {
     console.log("successfully connected to the database");
   })
