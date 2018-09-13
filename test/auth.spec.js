@@ -30,14 +30,15 @@ describe("Authentication and Setup Tests", function() {
   //   // server.close(done);
   // });
 
-  it("should create a new user POST /auth/signup", function() {
-    return request
+  it("should create a new user POST /auth/signup", function(done) {
+    request
       .post("/auth/signup")
       .send(testData.sampleUserA)
-      .expect(200);
+      .expect(200)
+      .then(done());
   });
 
-  it("Should return 400 if user has no username POST /auth/signup", function() {
+  it("Should return 400 if user has no username POST /auth/signup", function(done) {
     request
       .post("/auth/signup")
       .send(testData.sampleUserD)
@@ -46,9 +47,10 @@ describe("Authentication and Setup Tests", function() {
         data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
+        done();
       });
   });
-  it("Should return 400 if user has no email POST /auth/signup", function() {
+  it("Should return 400 if user has no email POST /auth/signup", function(done) {
     request
       .post("/auth/signup")
       .send(testData.sampleUserE)
@@ -57,9 +59,10 @@ describe("Authentication and Setup Tests", function() {
         data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
+        done();
       });
   });
-  it("Should return 400 if user has no password POST /auth/signup", function() {
+  it("Should return 400 if user has no password POST /auth/signup", function(done) {
     request
       .post("/auth/signup")
       .send(testData.sampleUserF)
@@ -68,10 +71,11 @@ describe("Authentication and Setup Tests", function() {
         data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("User details cannot be empty");
+        done();
       });
   });
 
-  it("Should return 400 if passwords do not match POST /auth/signup", function() {
+  it("Should return 400 if passwords do not match POST /auth/signup", function(done) {
     request
       .post("/auth/signup")
       .send(testData.sampleUserG)
@@ -80,6 +84,7 @@ describe("Authentication and Setup Tests", function() {
         data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("Passwords do not match");
+        done();
       });
   });
 
@@ -119,7 +124,7 @@ describe("Authentication and Setup Tests", function() {
       });
   });
 
-  it("should throw error user does not exist POST /auth/login", function() {
+  it("should throw error user does not exist POST /auth/login", function(done) {
     request
       .post("/auth/login")
       .send(testData.sampleUserG)
@@ -129,8 +134,10 @@ describe("Authentication and Setup Tests", function() {
         res.should.be.a("Object");
         res.body.should.have.property("success");
         res.body.success.should.be.eql(false);
+        done();
       });
   });
+
   it("should show profile of user after login POST /auth/login", function(done) {
     let _token = null;
     request
@@ -151,6 +158,20 @@ describe("Authentication and Setup Tests", function() {
             res.body.user.should.have.property("email");
             done();
           });
+      });
+  });
+  it("should throw error if login details are not provided POST /auth/login", function(done) {
+    request
+      .post("/auth/login")
+      .send(testData.sampleInvalidLogindetails)
+
+      .then(data => {
+        data.should.be.a("Object");
+        data.body.should.have.property("success");
+        data.body.should.have.property("message");
+        data.body.success.should.be.eql(false);
+        data.body.message.should.be.eql("User not found");
+        done();
       });
   });
 });

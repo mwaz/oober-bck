@@ -20,7 +20,7 @@ exports.create = (req, res, next) => {
   });
   Car.addCar(car, (err, car) => {
     if (err) {
-      res.json({
+      return res.json({
         success: false,
         message: "Failed to add Car"
       });
@@ -36,7 +36,7 @@ exports.create = (req, res, next) => {
 exports.getCars = (req, res, next) => {
   Car.getCarList(req.user.id, (err, car) => {
     if (err) {
-      res.json({
+      return res.json({
         success: false,
         message: "Error fetching cars"
       });
@@ -51,7 +51,7 @@ exports.getCars = (req, res, next) => {
 exports.getCar = (req, res) => {
   Car.getCarById(req.params.id, (err, carData) => {
     if (err) {
-      res.json({
+      return res.json({
         success: false,
         message: "Error fetching car" || err
       });
@@ -66,7 +66,7 @@ exports.getCar = (req, res) => {
 exports.deleteCar = (req, res) => {
   Car.deleteCarById(req.params.id, req.user.id, (err, carData) => {
     if (err) {
-      res.json({
+      return res.json({
         success: false,
         message: "Error deleting car" || err
       });
@@ -103,7 +103,7 @@ exports.editCar = (req, res, next) => {
 
   Car.editCarById(req.params.id, car, (err, car) => {
     if (err) {
-      res.json({
+      return res.json({
         success: false,
         message: "Failed to edit Car"
       });

@@ -47,6 +47,10 @@ module.exports = {
     password: "samplePasswords",
     confirmPassword: "samplePassword"
   },
+  sampleInvalidLogindetails: {
+    username: "Sample",
+    password: "samplePasswords"
+  },
   carSampleA: {
     carName: "someCarA",
     type: "sampleCarType",
@@ -91,6 +95,13 @@ module.exports = {
   },
   carSampleD: {
     carName: "someCarD",
+    type: "sampleCarType",
+    model: "VoxWagon",
+    capacity: "SomeCapacity",
+    status: "0"
+  },
+  carSampleDErrored: {
+    carName: "123145",
     type: "sampleCarType",
     model: "VoxWagon",
     capacity: "SomeCapacity",
