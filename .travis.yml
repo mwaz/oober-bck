@@ -9,6 +9,6 @@ services:
 scripts:
  - npm run test
  
-after_scripts:
+after_success:
   - npm run coverage
   - npm run coveralls
