@@ -4,10 +4,11 @@
   "description": "api crud",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "test": "./node_modules/.bin/_mocha  --exit --reporter spec",
     "start": "node app.js",
     "dev": "nodemon ./app.js localhost 3001",
-    "cover": "istanbul cover _mocha"
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
