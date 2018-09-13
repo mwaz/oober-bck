@@ -59,5 +59,4 @@ const port = config[process.env.NODE_ENV]["PORT"] || 3005;
 const server = app.listen(port, function() {
   console.log("app running on", server.address().port);
 });
-
 module.exports = server;
