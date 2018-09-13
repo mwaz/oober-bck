@@ -43,8 +43,20 @@ module.exports = {
   },
   sampleUserG: {
     username: "SampleUserG",
-    email: "sampleuserf@email.com",
+    email: "sampleuserg@email.com",
     password: "samplePasswords",
+    confirmPassword: "samplePassword"
+  },
+  sampleUserH: {
+    username: "SampleUserH",
+    email: "sampleuserh@email.com",
+    password: "samplePassword",
+    confirmPassword: "samplePassword"
+  },
+  sampleUserI: {
+    username: "SampleUserI",
+    email: "sampleuseri@email.com",
+    password: "samplePassword",
     confirmPassword: "samplePassword"
   },
   sampleInvalidLogindetails: {

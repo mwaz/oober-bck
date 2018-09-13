@@ -54,10 +54,10 @@ module.exports.getCarById = function(carId, callback) {
   Car.find(query, callback);
 };
 
-module.exports.getCarByName = function(carName, callback) {
-  const query = { carName: carName };
-  Car.find(query, callback).limit(1);
-};
+// module.exports.getCarByName = function(carName, callback) {
+//   const query = { carName: carName };
+//   Car.find(query, callback).limit(1);
+// };
 
 module.exports.deleteCarById = function(carId, userId, callback) {
   const query = { _id: carId, createdBy: userId };
@@ -67,7 +67,6 @@ module.exports.deleteCarById = function(carId, userId, callback) {
 module.exports.editCarById = function(carId, carDetails, callback) {
   Car.findById(carId, (err, car) => {
     if (err) throw err;
-
     Object.assign(car, carDetails).save(callback);
   });
 };

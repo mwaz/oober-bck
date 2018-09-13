@@ -79,17 +79,17 @@ exports.deleteCar = (req, res) => {
   });
 };
 
-exports.getCarByName = (req, res) => {
-  Car.getCarByName(car.carName, (err, car) => {
-    if (car) {
-      res.json({
-        success: false,
-        message: "A similar car exists",
-        car
-      });
-    }
-  });
-};
+// exports.getCarByName = (req, res) => {
+//   Car.getCarByName(car.carName, (err, car) => {
+//     if (car) {
+//       res.json({
+//         success: false,
+//         message: "A similar car exists",
+//         car
+//       });
+//     }
+//   });
+// };
 
 exports.editCar = (req, res, next) => {
   const car = {

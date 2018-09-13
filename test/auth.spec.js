@@ -33,9 +33,35 @@ describe("Authentication and Setup Tests", function() {
   it("should create a new user POST /auth/signup", function(done) {
     request
       .post("/auth/signup")
-      .send(testData.sampleUserA)
+      .send(testData.sampleUserH)
       .expect(200)
-      .then(done());
+      .then(res => {
+        res.body.should.be.a("Object");
+        res.body.should.have.property("message");
+        res.body.should.have.property("success");
+        res.body.should.have.property("user");
+        res.body.message.should.be.eql("User Registered Successfully");
+      });
+    done();
+  });
+
+  it("should throw an error if attempts to recreate a user are made POST /auth/signup", function(done) {
+    request
+      .post("/auth/signup")
+      .send(testData.sampleUserI)
+      .expect(200)
+      .then(
+        request
+          .post("/auth/signup")
+          .send(testData.sampleUserI)
+          .then(res => {
+            res.body.should.be.a("Object");
+            res.body.should.have.property("message");
+            res.body.should.have.property("success");
+            res.body.success.should.be.eql(false);
+          })
+      );
+    done();
   });
 
   it("Should return 400 if user has no username POST /auth/signup", function(done) {
@@ -160,7 +186,7 @@ describe("Authentication and Setup Tests", function() {
           });
       });
   });
-  it("should throw error if login details are not provided POST /auth/login", function(done) {
+  it("should throw error if login details are not correct POST /auth/login", function(done) {
     request
       .post("/auth/login")
       .send(testData.sampleInvalidLogindetails)
@@ -173,5 +199,17 @@ describe("Authentication and Setup Tests", function() {
         data.body.message.should.be.eql("User not found");
         done();
       });
+  });
+  it("should throw error if login details are not provided POST /auth/login", function(done) {
+    request
+      .post("/auth/login")
+      .send({ username: "", password: "sompassword" })
+      .expect(400)
+      .then(data => {
+        data.body.should.be.a("Object");
+        data.body.should.have.property("message");
+        data.body.message.should.be.eql("Kindly fill in all login details");
+      });
+    done();
   });
 });

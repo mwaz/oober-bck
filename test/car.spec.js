@@ -177,4 +177,46 @@ describe("Car endpoints", function() {
         done();
       });
   });
+
+  it("Should throw error if car is already added", function(done) {
+    request
+      .post("/oober/api/cars")
+      .set("Authorization", _token)
+      .send(testData.carSampleB)
+      .expect(200)
+      .then(
+        request
+          .post("/oober/api/cars")
+          .set("Authorization", _token)
+          .send(testData.carSampleB)
+          .then(res => {
+            res.body.should.be.a("Object");
+            res.body.should.have.property("message");
+            res.body.should.have.property("success");
+            res.body.success.should.be.eql(false);
+            res.body.message.should.be.eql("Failed to add Car");
+          })
+      );
+    done();
+  });
+  it("Should throw an error on unsuccessful car edit", function(done) {
+    request
+      .post("/oober/api/cars")
+      .set("Authorization", _token)
+      .send(testData.carSampleB)
+      .expect(200)
+      .then(
+        request
+          .put(`/oober/api/cars/${_carId}`)
+          .set("Authorization", _token)
+          .send(testData.carSampleB)
+          .then(res => {
+            res.body.should.have.property("success");
+            res.body.should.have.property("message");
+            res.body.success.should.be.eql(false);
+            res.body.message.should.be.eql("Failed to edit Car");
+          })
+      );
+    done();
+  });
 });
