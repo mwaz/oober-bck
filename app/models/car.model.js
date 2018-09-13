@@ -50,11 +50,8 @@ module.exports.getCarList = function(userId, callback) {
 
 module.exports.getCarById = function(carId, callback) {
   const query = { _id: carId };
-  try {
-    Car.find(query, callback);
-  } catch (err) {
-    console.log(err, "Caught error");
-  }
+
+  Car.find(query, callback);
 };
 
 module.exports.getCarByName = function(carName, callback) {
@@ -63,15 +60,8 @@ module.exports.getCarByName = function(carName, callback) {
 };
 
 module.exports.deleteCarById = function(carId, userId, callback) {
-  try {
   const query = { _id: carId, createdBy: userId };
-  if (userId !== query.createdBy) {
-    callback("No sufficient Privilleges to delete car");
-  }
-    Car.findOneAndDelete(query, callback);
-  } catch (err) {
-    console.log(err, "Caught error");
-  }
+  Car.findOneAndDelete(query, callback);
 };
 
 module.exports.editCarById = function(carId, carDetails, callback) {
