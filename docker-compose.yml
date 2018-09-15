@@ -5,7 +5,9 @@ services:
     restart: always
     build: .
     ports:
-      - "4000:4000"
+      - "3003:3003"
+    environment:
+      - NODE_ENV=STAGING
     links:
       - mongo
   mongo:
