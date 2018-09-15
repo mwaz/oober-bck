@@ -43,11 +43,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  const err = new Error("Not found");
-  err.status = 404;
-  next(err);
-});
+// app.use((req, res, next) => {
+//   const err = new Error("Not found");
+//   err.status = 404;
+//   next(err);
+// });
 
 require("./config/passport")(passport);
 app.get("/", (req, res) => {
