@@ -1,0 +1,78 @@
+swagger: "2.0"
+info:
+    title: OOber
+    description: 
+    version: 1.0.0
+
+host: 127.0.0.1:3000
+basepath: 
+schemes: 
+    - http
+paths:
+  /auth/signup:
+    post:
+      summary: Creates a new user.
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: User Signup details
+          schema:
+            type: object
+            required:
+              - username
+              - email
+              - password
+              - confirmPassword
+            properties:
+              username:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              confirmPassword:
+                type: string
+      responses: 
+        200: 
+            description: User Registered Successfully
+            schema: 
+                type: object
+                properties: 
+                    username:
+                        type: string
+                        example: Waweru
+        400:
+            description: User details cannot be empty
+        409:
+            description: User already exists, please log in
+        412:
+            description: Passwords do not match
+  
+  /auth/login:
+    post:
+      summary: Login a created user.
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: User login details
+          schema:
+            type: object
+            required:
+              - username
+              - password
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+      responses: 
+        200: 
+            description:  Successful Login
+        404:
+            description: User not found
+        400: 
+            description: Kindly fill in all login details

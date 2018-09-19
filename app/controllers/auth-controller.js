@@ -16,7 +16,7 @@ exports.signup = (req, res, next) => {
     });
   }
   if (req.body.password !== req.body.confirmPassword) {
-    return res.status(400).send({
+    return res.status(412).send({
       message: "Passwords do not match"
     });
   }
@@ -30,12 +30,12 @@ exports.signup = (req, res, next) => {
   //Create a user
   User.addUser(user, (err, user) => {
     if (err) {
-      return res.json({
+      return res.status(409).json({
         success: false,
         message: "Failed to create the user" + `${err}` || err
       });
     } else {
-      res.json({
+      res.status(200).json({
         success: true,
         message: "User Registered Successfully",
         user
@@ -56,7 +56,7 @@ exports.login = (req, res) => {
   User.getUserByUsername(username, (err, user) => {
     if (err) throw err;
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: "User not found"
       });
@@ -83,7 +83,9 @@ exports.login = (req, res) => {
           }
         });
       } else {
-        return res.json({ success: false, message: "Wrong Password" });
+        return res
+          .status(400)
+          .json({ success: false, message: "Wrong Password" });
       }
     });
   });
