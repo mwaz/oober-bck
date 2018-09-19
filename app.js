@@ -23,7 +23,7 @@ mongoose
   })
   .catch(() => {
     console.log("unable to connect to the database  Exiting now..");
-    // process.exit();
+    process.exit();
   });
 
 // create express app

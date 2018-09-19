@@ -2,7 +2,7 @@ module.exports = {
   DEVELOPMENT: {
     SECRET: "Iamthesecret",
     DATABASE: "mongodb://localhost:27017/dev_ooberdb",
-    PORT: 3001
+    PORT: 3003
   },
   TESTING: {
     SECRET: "Iamthesecret",
@@ -11,8 +11,8 @@ module.exports = {
   },
   STAGING: {
     SECRET: "Iamthesecret",
-    DATABASE: "mongodb://localhost:27017/staging_ooberdb",
-    PORT: 3003
+    DATABASE: "mongodb://mongo:27017/staging_ooberdb",
+    PORT: 3001
   },
   PRODUCTION: {
     SECRET: "Iamthesecret",
