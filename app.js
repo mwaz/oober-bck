@@ -1,18 +1,19 @@
 /**
  * root file for api configuration
  */
-const express = require("express");
-const bodyParser = require("body-parser");
-const routes = require("./app/routes/routes");
-// const dbConfig = require("./config/database.config");
-const config = require("./config");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const path = require("path");
-const passport = require("passport");
+const express = require("express"),
+  bodyParser = require("body-parser"),
+  routes = require("./app/routes/routes"),
+  config = require("./config"),
+  mongoose = require("mongoose"),
+  cors = require("cors"),
+  path = require("path"),
+  passport = require("passport"),
+  swaggerUi = require("swagger-ui-express"),
+  YAML = require("yamljs"),
+  swaggerDocument = YAML.load("./swagger.yaml");
 
 mongoose.Promise = global.Promise;
-// const dbURL = config[process.env.NODE_ENV]['DATABASE'];
 mongoose
   .connect(
     config[process.env.NODE_ENV]["DATABASE"],
@@ -23,11 +24,14 @@ mongoose
   })
   .catch(() => {
     console.log("unable to connect to the database  Exiting now..");
-    // process.exit();
+    process.exit();
   });
 
 // create express app
 const app = express();
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(cors());
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -42,12 +46,6 @@ app.use(express.static(path.join(__dirname, "public")));
 //Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use((req, res, next) => {
-  const err = new Error("Not found");
-  err.status = 404;
-  next(err);
-});
 
 require("./config/passport")(passport);
 app.get("/", (req, res) => {

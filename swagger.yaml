@@ -1,0 +1,217 @@
+swagger: "2.0"
+info:
+    title: OOber
+    description: A logistics management application
+    version: 1.0.0
+securityDefinitions:
+      apiKey:
+        type: apiKey
+        in: header
+        name: Authorization
+
+host: 127.0.0.1:3000
+basepath:
+schemes: 
+    - http
+
+security:
+    - apiKey: []
+consumes:
+    - application/json
+    
+paths:
+  /auth/signup:
+    desscription: Signup routes
+    post:
+      summary: Creates a new user.
+      tags:
+        - Auth
+      parameters:
+        - in: body
+          name: user
+          description: User Signup details
+          schema:
+            type: object
+            required:
+              - username
+              - password
+            properties:
+                username:
+                    type: string
+                    default: Waweru
+                email:
+                    type: string
+                    default: waweru@m.com
+                password:
+                    type: string
+                    default: somePassword
+                confirmPassword:
+                    type: string
+                    default: somePassword
+           
+      responses: 
+        200: 
+            description: User Registered Successfully
+            schema:  
+        400:
+            description: User details cannot be empty
+        409:
+            description: User already exists, please log in
+        412:
+            description: Passwords do not match
+  
+  /auth/login:
+    post:
+      summary: Login a created user.
+      tags:
+        - Auth
+      parameters:
+        - in: body
+          name: user
+          description: User login details
+          schema:
+            type: object
+            required:
+              - username
+              - password
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+      responses: 
+        200: 
+            description:  Successful Login
+        404:
+            description: User not found
+        400: 
+            description: Kindly fill in all login details
+  
+  /auth/profile:
+    get:
+      summary: Get the profile of a created user
+      tags:
+        - Auth
+      parameters:
+        - in: path
+          name: id
+      responses: 
+        200: 
+            description:  Successful
+        404:
+            description: User not found
+
+
+  /oober/api/cars:
+    post: 
+        summary: Create a car for the registered user
+        tags:
+            - Cars
+        security:
+            - apiKey: []
+        parameters:
+            - in: body
+              name: car
+              description: Car creation details
+              schema: 
+                type: object
+                required:
+                    - carName
+                    - type
+                    - model
+                    - capacity
+                
+                schema:
+                    properties:
+                    carName: 
+                        type: string
+                        default: Mazda Truck 4
+                    type:
+                        type: string
+                        default: Lorry
+                    model:
+                        type: string
+                        default: Mazda
+                    capacity:
+                        type: string
+                        default: 1500CC
+                    status: 
+                        type: string
+                        default: 0
+        responses:
+            201:
+                description: Successfully Added Car
+            400:
+                description: Kindly fill in all details
+            409:
+                description: Failed to add Car
+
+    get:
+        summary: Get all the created Cars
+        tags:
+            - Cars
+        security:
+            - apiKey: []
+        parameters:
+            - in: path
+              name: car
+              required: false
+        responses:
+            200:
+                description: Success
+
+  /oober/api/cars/{id}:
+    get:
+        summary: Get a single created car
+        tags:
+            - Cars
+        security:
+            - apiKey: []
+        parameters:
+            - in: path
+              name: id
+              description: Id of car to be fetched
+              required: true
+        responses:
+            200: 
+                description: success
+                schema:
+                    carName: 
+                        type: string
+                    type:
+                        type: string
+                    model:
+                        type: string
+                    capacity:
+                        type: string
+                    status: 
+                        type: string
+            400:
+                ddescription: Error fetching car
+    delete:
+        summary: Delete a car
+        tags:
+            - Cars
+        security:
+            - apiKey: []
+        parameters:
+            - in: path
+              name: id
+              description: Id of car to be deleted
+              required: true
+        responses:
+            200: 
+                description: success
+                schema:
+                    
+       
+              
+        
+
+
+responses:
+    UnauthorizedError:
+        description: User is not Authorized to perform this operation
+        headers: 
+            Authorization:
+                type: string

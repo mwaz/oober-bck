@@ -5,11 +5,15 @@ services:
     restart: always
     build: .
     ports:
-      - "4000:4000"
+      - "3001:3001"
+    environment:
+      - NODE_ENV=STAGING
     links:
       - mongo
+    command: npm start
   mongo:
     container_name: mongo
     image: mongo
     ports:
       - "27017:27017"
+   
