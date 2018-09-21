@@ -14,3 +14,17 @@ The Express JS framework handles the API CRUD, mongodb handles the DB storage wh
 * express JS framework
 * Moongoose 
 
+## What is OOber
+
+Oober is a logistics Application that seeks to solve the challenge of many people who do not understand how to transport goods from one location to another. The idea is to have an application where the drivers can sign up and the users can be able to view the available drivers then book the transportation services that they require with negotiated price amounts. OOber will be able to leverage on the existing African economy to be able to build scalable businesses and solve the high rates that individuals pay when they require logistics services. 
+
+## Setup 
+
+OOber is hosted on dockerhub as a Docker image on [this link](docker pull sparatan/oober), Through the image you can be able to run the application and test it out, on the works is proper documentation and ways in which one can contribute to the application development. 
+
+## Technologies
+Technologies used in the application are Express, Node and MongoDB. In the next iteration, ReactJS will be used as the frontend with Google Cloud Platfrom working as the engine that will power the application. Google maps integration will also be important to tell about the geolocation data.
+
+
+
+
