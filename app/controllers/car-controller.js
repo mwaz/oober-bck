@@ -66,12 +66,12 @@ exports.getCar = (req, res) => {
 exports.deleteCar = (req, res) => {
   Car.deleteCarById(req.params.id, req.user.id, (err, carData) => {
     if (err) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "Error deleting car" || err
       });
     }
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Car Successfully deleted",
       carData
@@ -103,12 +103,12 @@ exports.editCar = (req, res, next) => {
 
   Car.editCarById(req.params.id, car, (err, car) => {
     if (err) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "Failed to edit Car"
       });
     }
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Successfully Edited Car",
       car
