@@ -92,5 +92,5 @@ exports.login = (req, res) => {
 };
 
 exports.profile = (req, res, next) => {
-  res.json({ user: req.user });
+  res.status(200).json({ user: req.user });
 };

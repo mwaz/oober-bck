@@ -20,12 +20,12 @@ exports.create = (req, res, next) => {
   });
   Car.addCar(car, (err, car) => {
     if (err) {
-      return res.json({
+      return res.status(409).json({
         success: false,
         message: "Failed to add Car"
       });
     }
-    res.json({
+    res.status(201).json({
       success: true,
       message: "Successfully Added Car",
       car
@@ -51,7 +51,7 @@ exports.getCars = (req, res, next) => {
 exports.getCar = (req, res) => {
   Car.getCarById(req.params.id, (err, carData) => {
     if (err) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "Error fetching car" || err
       });
