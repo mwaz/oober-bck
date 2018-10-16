@@ -36,7 +36,7 @@ describe("Car endpoints", function() {
       .post("/oober/api/cars")
       .set("Authorization", _token)
       .send(testData.carSampleA)
-      .expect(200)
+      .expect(201)
       .then(res => {
         _carId = res.body.car._id;
         done();
@@ -49,7 +49,7 @@ describe("Car endpoints", function() {
       .post("/oober/api/cars")
       .set("Authorization", _token)
       .send(testData.carSampleC)
-      .expect(200)
+      .expect(201)
       .then(res => {
         _carId2 = res.body.car._id;
         done();
@@ -68,7 +68,7 @@ describe("Car endpoints", function() {
       .post("/oober/api/cars")
       .set("Authorization", _token)
       .send(testData.carSampleB)
-      .expect(200)
+      .expect(201)
       .then(res => {
         res.body.should.have.property("message");
         res.body.should.have.property("success");
@@ -183,7 +183,7 @@ describe("Car endpoints", function() {
       .post("/oober/api/cars")
       .set("Authorization", _token)
       .send(testData.carSampleB)
-      .expect(200)
+      .expect(409)
       .then(
         request
           .post("/oober/api/cars")
@@ -204,7 +204,7 @@ describe("Car endpoints", function() {
       .post("/oober/api/cars")
       .set("Authorization", _token)
       .send(testData.carSampleB)
-      .expect(200)
+      .expect(409)
       .then(
         request
           .put(`/oober/api/cars/${_carId}`)

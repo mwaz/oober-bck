@@ -105,9 +105,9 @@ describe("Authentication and Setup Tests", function() {
     request
       .post("/auth/signup")
       .send(testData.sampleUserG)
-      .expect(400)
+      .expect(412)
       .end((err, data) => {
-        data.should.have.status(400);
+        data.should.have.status(412);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("Passwords do not match");
         done();
@@ -143,7 +143,7 @@ describe("Authentication and Setup Tests", function() {
       .send(testData.sampleUserAA)
       .expect(400)
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.should.be.a("Object");
         res.body.message.should.be.eql("Wrong Password");
         done();
@@ -154,9 +154,9 @@ describe("Authentication and Setup Tests", function() {
     request
       .post("/auth/login")
       .send(testData.sampleUserG)
-      .expect(400)
+      .expect(404)
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(404);
         res.should.be.a("Object");
         res.body.should.have.property("success");
         res.body.success.should.be.eql(false);

@@ -113,31 +113,29 @@ paths:
             - in: body
               name: car
               description: Car creation details
-              schema: 
+              schema:
                 type: object
                 required:
                     - carName
                     - type
                     - model
                     - capacity
-                
-                schema:
-                    properties:
-                    carName: 
-                        type: string
-                        default: Mazda Truck 4
-                    type:
-                        type: string
-                        default: Lorry
-                    model:
-                        type: string
-                        default: Mazda
-                    capacity:
-                        type: string
-                        default: 1500CC
-                    status: 
-                        type: string
-                        default: 0
+                properties:
+                  carName: 
+                    type: string
+                    default: Mazda Truck 4
+                  type:
+                    type: string
+                    default: Lorry
+                  model:
+                    type: string
+                    default: Mazda
+                  capacity:
+                    type: string
+                    default: 1500CC
+                  status: 
+                    type: string
+                    default: 0
         responses:
             201:
                 description: Successfully Added Car
@@ -145,6 +143,7 @@ paths:
                 description: Kindly fill in all details
             409:
                 description: Failed to add Car
+
 
     get:
         summary: Get all the created Cars
@@ -201,14 +200,46 @@ paths:
               required: true
         responses:
             200: 
-                description: success
-                schema:
+                description: Car Successfully deleted
+            400:
+                description: Error deleting car
+
+    put: 
+        summary: Edit the car details for an existing car
+        tags:
+            - Cars
+        security:
+            - apiKey: []
+        parameters:
+            - in: path
+              name: id
+            - in: body
+              schema: 
+                type: object
+                properties:
+                  carName: 
+                    type: string
+                    default: Mazda Truck 4
+                  type:
+                    type: string
+                    default: Lorry
+                  model:
+                    type: string
+                    default: Mazda
+                  capacity:
+                    type: string
+                    default: 1500CC
+                  status: 
+                    type: string
+                    default: 0
+        responses:
+            400:
+                description: Failed to edit Car
+            200:
+                description: Successfully Edited Car
                     
        
-              
-        
-
-
+            
 responses:
     UnauthorizedError:
         description: User is not Authorized to perform this operation
