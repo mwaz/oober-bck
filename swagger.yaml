@@ -236,9 +236,7 @@ paths:
             400:
                 description: Failed to edit Car
             200:
-                description: Successfully Edited Car
-                    
-       
+                description: Successfully Edited Car     
             
 responses:
     UnauthorizedError:

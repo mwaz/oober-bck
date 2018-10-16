@@ -25,6 +25,11 @@ OOber is hosted on dockerhub as a Docker image on [this link](docker pull sparat
 ## Technologies
 Technologies used in the application are Express, Node and MongoDB. In the next iteration, ReactJS will be used as the frontend with Google Cloud Platfrom working as the engine that will power the application. Google maps integration will also be important to tell about the geolocation data.
 
+## Documentation 
+The appp is currently documented using swagger 2.0 and the Open API Specification as shown below . 
+
+![screen shot 2018-09-21 at 17 29 45](https://user-images.githubusercontent.com/10160787/45889084-35e35580-bdc8-11e8-992d-ba11d8858bb9.png)
+
 
 
 
