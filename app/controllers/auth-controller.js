@@ -13,44 +13,47 @@ exports.signup = async (req, res, next) => {
   });
 
   //Create a user
- await validation.validateAuth(req, (err) => {
+  try {
+   await validation.validateAuth(req);
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      message: err.message
+    });
+  }
+
+  // console.log(err.message, "failed here");
+
+  await User.addUser(user, (err, user) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(409).json({
         success: false,
-        message: err.message
+        message: "Failed to create the user," + ` ${err.message}` || err.message
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "User Registered Successfully",
+        user
       });
     }
   });
-
-    await User.addUser(user, (err, user) => {
-      if (err) {
-        return res.status(409).json({
-          success: false,
-          message:
-            "Failed to create the user," + ` ${err.message}` || err.message
-        });
-      } else {
-        res.status(200).json({
-          success: true,
-          message: "User Registered Successfully",
-          user
-        });
-      }
-    });
-  
 };
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  validation.validateLogin(req, (err, data) => {
-    if (err) {
+ 
+  try{
+    await validation.validateLogin(req);
+  }
+  catch (err){
       return res.status(400).json({
         success: false,
         message: err.message
       });
-    }
-  });
+  }
+
 
   User.getUserByUsername(username, (err, user) => {
     if (err) throw err;
