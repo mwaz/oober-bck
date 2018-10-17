@@ -5,26 +5,22 @@ const config = require("../../config");
 const validation = require("../../utils/authValidators");
 
 exports.signup = async (req, res, next) => {
-  // Initialize object for a  new user
   const user = new User({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password
   });
 
-  //Create a user
   try {
-   await validation.validateAuth(req);
+    await validation.validateAuth(req);
   } catch (err) {
     return res.status(400).json({
       success: false,
-      message: err.message
+      message: err
     });
   }
 
-  // console.log(err.message, "failed here");
-
-  await User.addUser(user, (err, user) => {
+ User.addUser(user, (err, user) => {
     if (err) {
       return res.status(409).json({
         success: false,
@@ -43,19 +39,17 @@ exports.login = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
- 
-  try{
-    await validation.validateLogin(req);
-  }
-  catch (err){
-      return res.status(400).json({
-        success: false,
-        message: err.message
-      });
+  try {
+    const user = await validation.validateLogin(req);
+    console.log(user)
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      message: err
+    });
   }
 
-
-  User.getUserByUsername(username, (err, user) => {
+ await User.getUserByUsername(username, (err, user) => {
     if (err) throw err;
     if (!user) {
       return res.status(404).json({

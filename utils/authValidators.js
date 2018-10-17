@@ -6,7 +6,7 @@ exports.validateAuth = async req => {
   return new Promise((resolve, reject) => {
     if (!username) {
       let error = "Username cannot be empty";
-      reject(new Error(error));
+      reject(error);
     }
     if (!email) {
       let error = "Email cannot be empty";
@@ -24,14 +24,16 @@ exports.validateAuth = async req => {
       let error = "Passwords do not match";
       reject(error);
     }
+    resolve();
   });
 };
 
 exports.validateLogin = async req => {
   return new Promise((resolve, reject) => {
     if (!req.body.username || !req.body.password) {
-      const loginError = new Error("Kindly fill in all login details");
+      const loginError = "Kindly fill in all login details";
       reject(loginError);
     }
+    resolve();
   });
 };
