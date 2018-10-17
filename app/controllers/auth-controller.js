@@ -3,6 +3,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const config = require("../../config");
 const validation = require("../../utils/authValidators");
+const dBConfig = require("../../config/dbConfig")
 
 exports.signup = async (req, res, next) => {
   const user = new User({
@@ -63,7 +64,7 @@ exports.login = async (req, res) => {
       if (isMatch) {
         const token = jwt.sign(
           user.toJSON(),
-          config[process.env.NODE_ENV]["SECRET"],
+          dBConfig.secret,
           {
             expiresIn: 604800
           }

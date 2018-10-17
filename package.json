@@ -4,9 +4,9 @@
   "description": "api crud",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/.bin/_mocha --exit --reporter spec",
+    "test": "NODE_ENV=testing ./node_modules/.bin/_mocha --exit --reporter spec",
     "start": "node app.js",
-    "dev": "nodemon ./app.js localhost 3001",
+    "dev": "NODE_ENV=developent nodemon ./app.js localhost 3001",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
