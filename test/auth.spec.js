@@ -1,4 +1,4 @@
-process.env.NODE_ENV = "TESTING";
+process.env.NODE_ENV = "testing";
 
 const assert = require("assert");
 const chai = require("chai");

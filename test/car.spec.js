@@ -1,5 +1,4 @@
-process.env.NODE_ENV = "TESTING";
-
+process.env.NODE_ENV = "testing";
 const assert = require("assert"),
   User = require("../app/models/user.model"),
   Car = require("../app/models/car.model"),

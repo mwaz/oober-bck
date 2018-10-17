@@ -11,12 +11,14 @@ const express = require("express"),
   passport = require("passport"),
   swaggerUi = require("swagger-ui-express"),
   YAML = require("yamljs"),
-  swaggerDocument = YAML.load("./swagger.yaml");
+  dBConfig = require("./config/dbConfig");
+swaggerDocument = YAML.load("./swagger.yaml");
 
 mongoose.Promise = global.Promise;
+
 mongoose
   .connect(
-    config[process.env.NODE_ENV]["DATABASE"],
+    dBConfig.database,
     { useNewUrlParser: true }
   )
   .then(() => {
@@ -52,7 +54,7 @@ app.get("/", (req, res) => {
   res.send("Invalid Endpoint");
 });
 
-const port = config[process.env.NODE_ENV]["PORT"] || 3005;
+const port = dBConfig.port || 3005;
 
 const server = app.listen(port, function() {
   console.log("app running on", server.address().port);
