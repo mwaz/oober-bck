@@ -7,13 +7,10 @@ const mongoose = require("mongoose");
 const User = require("../app/models/user.model");
 const supertest = require("supertest");
 const app = require("../app.js");
-const mongoUnit = require("mongo-unit");
-const mongodb = require("mongodb");
 const chaiHttP = require("chai-http");
 const testData = require("../fixtures/testData");
 let should = chai.should();
 chai.use(chaiHttP);
-const authController = require("../app/controllers/auth-controller");
 
 describe("Authentication and Setup Tests", function() {
   let request = null;
@@ -72,7 +69,7 @@ describe("Authentication and Setup Tests", function() {
       .end((err, data) => {
         data.should.have.status(400);
         data.body.should.be.a("Object");
-        data.body.message.should.be.eql("User details cannot be empty");
+        data.body.message.should.be.eql("Username cannot be empty");
         done();
       });
   });
@@ -84,7 +81,7 @@ describe("Authentication and Setup Tests", function() {
       .end((err, data) => {
         data.should.have.status(400);
         data.body.should.be.a("Object");
-        data.body.message.should.be.eql("User details cannot be empty");
+        data.body.message.should.be.eql("Email cannot be empty");
         done();
       });
   });
@@ -96,7 +93,7 @@ describe("Authentication and Setup Tests", function() {
       .end((err, data) => {
         data.should.have.status(400);
         data.body.should.be.a("Object");
-        data.body.message.should.be.eql("User details cannot be empty");
+        data.body.message.should.be.eql("Password cannot be empty");
         done();
       });
   });
@@ -105,9 +102,9 @@ describe("Authentication and Setup Tests", function() {
     request
       .post("/auth/signup")
       .send(testData.sampleUserG)
-      .expect(412)
+      .expect(400)
       .end((err, data) => {
-        data.should.have.status(412);
+        data.should.have.status(400);
         data.body.should.be.a("Object");
         data.body.message.should.be.eql("Passwords do not match");
         done();
