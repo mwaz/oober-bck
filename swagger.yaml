@@ -9,7 +9,7 @@ securityDefinitions:
         in: header
         name: Authorization
 
-host: 127.0.0.1:3000
+host: 127.0.0.1:3002
 basepath:
 schemes: 
     - http

@@ -12,7 +12,7 @@ describe("Car endpoints", function() {
   let request = null;
   let server = null;
 
-  before(function(done) {
+  this.beforeAll(function(done) {
     server = app.listen(done);
     request = supertest.agent(server);
   });

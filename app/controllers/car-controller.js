@@ -1,15 +1,16 @@
 const Car = require("../models/car.model");
-const BookedCar = require("../models/carBookings.model");
-const passport = require("passport");
-const jwt = require("jsonwebtoken");
+const validate = require("../../utils/carValidators");
 
-exports.create = (req, res, next) => {
-  if (!req.body.carName || !req.body.model) {
-    return res.status(400).json({
+exports.create = async (req, res, next) => {
+  try {
+    await validate.validateCarData(req);
+  } catch (err) {
+    return res.status(400).send({
       success: false,
-      message: "Kindly fill in all details"
+      message: err
     });
   }
+
   const car = new Car({
     carName: req.body.carName,
     type: req.body.type,
@@ -18,11 +19,12 @@ exports.create = (req, res, next) => {
     createdBy: req.user._id,
     status: req.body.status
   });
+
   Car.addCar(car, (err, car) => {
     if (err) {
       return res.status(409).json({
         success: false,
-        message: "Failed to add Car"
+        message: `Failed to add Car, ${err.message}`
       });
     }
     res.status(201).json({
@@ -79,18 +81,6 @@ exports.deleteCar = (req, res) => {
   });
 };
 
-// exports.getCarByName = (req, res) => {
-//   Car.getCarByName(car.carName, (err, car) => {
-//     if (car) {
-//       res.json({
-//         success: false,
-//         message: "A similar car exists",
-//         car
-//       });
-//     }
-//   });
-// };
-
 exports.editCar = (req, res, next) => {
   const car = {
     carName: req.body.carName,
@@ -108,6 +98,7 @@ exports.editCar = (req, res, next) => {
         message: "Failed to edit Car"
       });
     }
+    x;
     res.status(200).json({
       success: true,
       message: "Successfully Edited Car",
@@ -115,12 +106,3 @@ exports.editCar = (req, res, next) => {
     });
   });
 };
-
-// exports.bookCar = (req, res) => {
-//   const bookedCar = new BookedCar({
-//     bookedVehicle:
-//     bookedBy:
-//     vehicleStatus:
-
-//   })
-// }

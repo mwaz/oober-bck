@@ -16,7 +16,7 @@ describe("Authentication and Setup Tests", function() {
   let request = null;
   let server = null;
 
-  before(function(done) {
+  this.beforeAll(function(done) {
     user = new User(testData.sampleUserA);
     User.addUser(user);
     server = app.listen(done);

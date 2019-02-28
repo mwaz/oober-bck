@@ -19,7 +19,7 @@ mongoose.Promise = global.Promise;
 mongoose
   .connect(
     dBConfig.database,
-    { useNewUrlParser: true }
+    { useNewUrlParser: true}
   )
   .then(() => {
     console.log("successfully connected to the database");
@@ -28,6 +28,7 @@ mongoose
     console.log("unable to connect to the database  Exiting now..");
     process.exit();
   });
+  mongoose.set('useCreateIndex', true);
 
 // create express app
 const app = express();
